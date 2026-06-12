@@ -42,6 +42,14 @@ return {
           },
         },
       },
+      -- lazygit 面板边框色：默认取 MatchParen，但 ayu 的 MatchParen 无前景色，
+      -- 会回退到 lazygit 自带的亮色，这里显式指到主题蓝
+      lazygit = {
+        theme = {
+          activeBorderColor = { fg = "DiagnosticInfo", bold = true },
+          searchingActiveBorderColor = { fg = "DiagnosticInfo", bold = true },
+        },
+      },
       -- 窗口样式覆盖（snacks 浮窗默认无边框）
       styles = {
         lazygit = { border = "rounded" },
