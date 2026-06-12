@@ -7,9 +7,8 @@ local M = {}
 -- 基于 Ayu 主题
 M.palette = {
   -- 背景色系
-  bg_main = "#1c1c1c",   -- bufferline 整体背景；bg_color 恢复不透明时的取值
-  bg_light = "#1f2430",  -- Visual 选区、bufferline 活动标签、lualine b 段
-  bg_alt = "#181818",    -- bufferline 非活动标签
+  bg_main = "#1c1c1c",   -- bg_color 恢复不透明时的取值
+  bg_light = "#1f2430",  -- Visual 选区
   bg_cursor = "#202020", -- 光标行/列、当前行号
 
   -- 前景色系
@@ -48,15 +47,16 @@ M.semantic = {
 
 -- 状态栏（ui/statusline.lua）
 M.lualine = {
-  bg = M.bg_color,                 -- c 段（中段）背景
-  section_bg = M.palette.bg_light, -- b 段（分支/diff）背景
+  bg = M.bg_color, -- a/b/c 全段背景
 }
 
 -- 缓冲区标签（ui/bufferline.lua）
+-- 背景全透明，活动标签靠亮色文字 + 橙色下划线区分
 M.bufferline = {
-  fill_bg = M.palette.bg_main,
-  active_bg = M.palette.bg_light,
-  inactive_bg = M.palette.bg_alt,
+  fill_bg = M.bg_color,
+  active_bg = M.bg_color,
+  inactive_bg = M.bg_color,
+  visible_bg = M.bg_color,
   inactive_fg = M.palette.fg_muted,
 }
 

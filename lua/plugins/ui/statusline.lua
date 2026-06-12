@@ -6,11 +6,14 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local custom_theme = require("lualine.themes.ayu")
-    -- 覆盖所有模式：c 段（中段）背景透明，b 段（分支/diff）柔和背景
+    -- 覆盖所有模式：a/b/c 全段背景透明，a 段模式色从色块改为彩色加粗文字
     for _, mode in pairs(custom_theme) do
       if type(mode) == "table" then
+        if mode.a and mode.a.bg then
+          mode.a = { fg = mode.a.bg, bg = colors.lualine.bg, gui = "bold" }
+        end
         if mode.b then
-          mode.b.bg = colors.lualine.section_bg
+          mode.b.bg = colors.lualine.bg
         end
         if mode.c then
           mode.c.bg = colors.lualine.bg
