@@ -33,7 +33,6 @@
 ### UI 组件 (`lua/plugins/ui/`)
 - `statusline.lua` - Lualine 配置
 - `bufferline.lua` - 缓冲区标签
-- `dashboard.lua` - 启动屏幕（当前已在 ui.lua 中注释停用）
 - `notifications.lua` - Noice 设置（通知弹窗渲染由 snacks.notifier 接管）
 
 ### 多功能工具集 (`lua/plugins/snacks.lua`)

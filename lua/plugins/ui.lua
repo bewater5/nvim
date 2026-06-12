@@ -14,7 +14,4 @@ return {
   require("plugins.ui.notifications"),
 
   -- UI 增强（dressing/indent-blankline 已由 snacks.nvim 的 input/picker/indent 模块接管）
-
-  -- 启动屏幕
-  -- require("plugins.ui.dashboard"),
 }

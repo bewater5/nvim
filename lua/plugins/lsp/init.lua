@@ -9,7 +9,6 @@ return {
       "mason-org/mason-lspconfig.nvim",
       { "saghen/blink.cmp", version = "1.*" },
       "L3MON4D3/LuaSnip",
-      "j-hui/fidget.nvim",
     },
     config = function()
       -- 按顺序加载各个模块

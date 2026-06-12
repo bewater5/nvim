@@ -58,16 +58,6 @@ return {
     end,
   },
 
-  -- 书签
-  {
-    "MattesGroeger/vim-bookmarks",
-    event = { "BufReadPre", "BufNewFile" },
-    init = function()
-      vim.g.bookmark_sign = "♥"
-      vim.g.bookmark_highlight_lines = 1
-    end,
-  },
-
   -- 快速跳转
   {
     "folke/flash.nvim",
@@ -78,11 +68,6 @@ return {
     end,
   },
 
-  -- 强大的重复动作
-  {
-    "tpope/vim-repeat",
-    event = { "BufReadPre", "BufNewFile" },
-  },
 
   -- 增强会话管理
   {

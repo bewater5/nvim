@@ -23,6 +23,8 @@ return {
         enabled = true,
         animate = { enabled = false },
       },
+      -- 左侧列：sign（诊断/书签）+ 行号 + git 状态条 + 折叠，各占固定位置
+      statuscolumn = { enabled = true },
       -- vim.ui.input 美化（重命名等输入框）
       input = { enabled = true },
       -- 通知渲染
