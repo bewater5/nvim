@@ -16,7 +16,8 @@ M.palette = {
   fg_dim = "#5c6773",    -- 行号、折叠列、bufferline 次要文字
   fg_bright = "#ffffff", -- 搜索命中、当前行号、bufferline 活动文字、诊断标题
   fg_muted = "#808080",  -- bufferline 非活动标签文字
-  fg_dark = "#3e4451",   -- 标志列、窗口分隔线、浮窗边框
+  fg_dark = "#3e4451",   -- 标志列
+  border = "#2c313c",    -- 浮窗边框、窗口分隔线
 
   -- Ayu 主题色
   blue = "#39bae6",   -- semantic.info / semantic.folder
@@ -39,8 +40,8 @@ M.semantic = {
   info = M.palette.blue,
   hint = M.palette.cyan,
 
-  folder = M.palette.blue,       -- FileExplorerTitle（colorscheme.lua）
-  separator = M.palette.fg_dark, -- WinSeparator（colorscheme.lua）
+  folder = M.palette.blue,      -- FileExplorerTitle（colorscheme.lua）
+  separator = M.palette.border, -- WinSeparator（colorscheme.lua）
 }
 
 -- ========== 组件颜色 ==========
@@ -64,7 +65,7 @@ M.bufferline = {
 -- 诊断浮窗与符号（colorscheme.lua、lsp/utils.lua）
 M.diagnostic = {
   float_bg = M.bg_color,
-  float_border = M.palette.fg_dark,
+  float_border = M.palette.border,
   title = M.palette.fg_bright,
 
   -- 浮窗内文本
