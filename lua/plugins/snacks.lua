@@ -39,6 +39,20 @@ return {
         sources = {
           explorer = {
             hidden = true, -- 显示隐藏文件
+            -- 居中浮窗布局（默认为左侧边栏）
+            layout = {
+              layout = {
+                box = "vertical",
+                width = 100,
+                height = 50,
+                border = "rounded",
+                title = "{title} {live} {flags}",
+                title_pos = "center",
+                backdrop = false,
+                { win = "input", height = 1, border = "bottom" },
+                { win = "list", border = "none" },
+              },
+            },
           },
         },
       },
