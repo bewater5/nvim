@@ -66,6 +66,20 @@ return {
           fg = colors.palette.fg_main,
           bg = colors.bg_color,
         },
+        -- 标签栏/状态栏基底组：bufferline 与 lualine 的高亮组
+        -- 缺背景时回退到这里，不透明会让整条栏带色
+        TabLineFill = {
+          bg = colors.bg_color,
+        },
+        TabLine = {
+          bg = colors.bg_color,
+        },
+        StatusLine = {
+          bg = colors.bg_color,
+        },
+        StatusLineNC = {
+          bg = colors.bg_color,
+        },
 
         -- 浮窗（诊断、hover、补全文档等）
         NormalFloat = {
