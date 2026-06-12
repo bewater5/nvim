@@ -28,8 +28,8 @@ return {
         ui_select = true,
         -- 输入框标题上的开关徽标（默认单字母 h/i 不直观）
         toggles = {
-          hidden = "隐",
-          ignored = "忽",
+          hidden = "", -- 正在显示隐藏文件
+          ignored = "", -- 正在显示 gitignore 文件
         },
         win = {
           input = {
