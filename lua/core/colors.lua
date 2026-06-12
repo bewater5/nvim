@@ -17,7 +17,7 @@ M.palette = {
   fg_bright = "#ffffff", -- 搜索命中、当前行号、bufferline 活动文字、诊断标题
   fg_muted = "#808080",  -- bufferline 非活动标签文字
   fg_dark = "#3e4451",   -- 标志列
-  border = "#cccccc",    -- 浮窗边框、窗口分隔线
+  border = "#808080",    -- 浮窗边框、窗口分隔线
 
   -- Ayu 主题色
   blue = "#39bae6",   -- semantic.info

@@ -26,10 +26,10 @@ return {
       -- 模糊查找；vim.ui.select 也由 picker 渲染
       picker = {
         ui_select = true,
-        -- 输入框标题上的开关徽标（默认单字母 h/i 不直观）
+        -- 输入框标题上的开关徽标
         toggles = {
-          hidden = "", -- 正在显示隐藏文件
-          ignored = "", -- 正在显示 gitignore 文件
+          hidden = "H", -- 正在显示隐藏文件
+          ignored = "I", -- 正在显示 gitignore 文件
         },
         win = {
           input = {
