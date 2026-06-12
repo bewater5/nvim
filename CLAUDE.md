@@ -55,7 +55,7 @@ bufdelete 功能（键位在 core/keymaps.lua）
 - 插件专用键映射：使用导出的设置函数模式（如 `_G.setup_lsp_keymaps`）
 
 ### 颜色自定义
-所有颜色集中在 `lua/core/colors.lua` 中。使用 `M.palette` 获取基础颜色，`M.semantic` 获取语义化颜色，或使用组件专用表（如 `M.bufferline`）。透明背景统一由 `M.transparent` 控制。
+所有颜色集中在 `lua/core/colors.lua` 中。使用 `M.palette` 获取基础颜色，`M.semantic` 获取语义化颜色，或使用组件专用表（如 `M.bufferline`）。编辑区/浮窗/菜单的背景统一由 `M.bg_color` 控制（`"NONE"` 为透明）。
 
 ## 重要键位
 

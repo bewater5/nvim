@@ -8,12 +8,12 @@ return {
     require("ayu").setup({
       overrides = {
         -- 透明背景：不绘制背景色，透出终端背景（透明度由终端模拟器控制）
-        -- 统一引用 colors.transparent，恢复不透明时只需改 core/colors.lua 一处
+        -- 统一引用 colors.bg_color，恢复不透明时只需改 core/colors.lua 一处
         Normal = {
-          bg = colors.transparent,
+          bg = colors.bg_color,
         },
         NormalNC = {
-          bg = colors.transparent,
+          bg = colors.bg_color,
         },
         -- 搜索颜色
         Search = {
@@ -46,7 +46,7 @@ return {
         -- 普通行号
         LineNr = {
           fg = colors.palette.fg_dim, -- 使用次要文字颜色
-          bg = colors.transparent,    -- 与主背景一致（透明）
+          bg = colors.bg_color,    -- 与主背景一致（透明）
         },
         -- 当前行行号（光标所在行）
         CursorLineNr = {
@@ -57,7 +57,7 @@ return {
         -- 标志列（行号左边的竖线区域）
         SignColumn = {
           fg = colors.palette.fg_dark, -- 标志前景色
-          bg = colors.transparent,     -- 与主背景一致（透明）
+          bg = colors.bg_color,     -- 与主背景一致（透明）
         },
         -- 窗口分界线
         WinSeparator = {
@@ -67,12 +67,12 @@ return {
         -- 折叠列
         FoldColumn = {
           fg = colors.palette.fg_dim,
-          bg = colors.transparent,
+          bg = colors.bg_color,
         },
         -- 原生补全/命令行补全菜单
         Pmenu = {
           fg = colors.palette.fg_main,
-          bg = colors.transparent,
+          bg = colors.bg_color,
         },
 
         -- ========== 诊断浮窗颜色覆盖 ==========
@@ -105,19 +105,19 @@ return {
         -- 诊断符号颜色
         DiagnosticSignError = {
           fg = colors.diagnostic.error_sign,
-          bg = colors.transparent,
+          bg = colors.bg_color,
         },
         DiagnosticSignWarn = {
           fg = colors.diagnostic.warning_sign,
-          bg = colors.transparent,
+          bg = colors.bg_color,
         },
         DiagnosticSignInfo = {
           fg = colors.diagnostic.info_sign,
-          bg = colors.transparent,
+          bg = colors.bg_color,
         },
         DiagnosticSignHint = {
           fg = colors.diagnostic.hint_sign,
-          bg = colors.transparent,
+          bg = colors.bg_color,
         },
       },
     })
@@ -126,7 +126,7 @@ return {
     -- bufferline 文件树偏移区的标题样式（NvimTree 颜色覆盖已随插件移除）
     vim.cmd(string.format(
       [[:hi FileExplorerTitle guibg=%s guifg=%s gui=bold]],
-      colors.transparent,
+      colors.bg_color,
       colors.semantic.folder
     ))
   end,

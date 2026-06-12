@@ -41,10 +41,10 @@ M.palette = {
   coral = "#e06c75",     -- 珊瑚色 (根文件夹)
 }
 
--- ========== 透明背景 (Transparent Background) ==========
--- 所有"透出终端背景"的高亮组统一引用此变量，
--- 想恢复不透明背景时，改回色值（如 M.palette.bg_main）即可一次性替换
-M.transparent = "NONE"
+-- ========== 统一背景色 (Background Color) ==========
+-- 编辑区/浮窗/菜单等的背景统一引用此变量：
+-- "NONE" 为透明（透出终端背景），改回色值（如 M.palette.bg_main）即可一键恢复不透明
+M.bg_color = "NONE"
 
 -- ========== 语义化颜色 (Semantic Colors) ==========
 -- 基于用途的颜色定义，便于理解和使用
@@ -108,7 +108,7 @@ M.bufferline = {
 -- 诊断浮窗颜色配置
 M.diagnostic = {
   -- 浮窗背景和边框
-  float_bg = M.transparent,         -- 浮窗背景色（透明，随主背景）
+  float_bg = M.bg_color,            -- 浮窗背景色（随统一背景色）
   float_border = M.palette.fg_dark, -- 浮窗边框色
 
   -- 诊断文本颜色

@@ -176,7 +176,7 @@ local M = {
     "n",
     "<leader>tt",
     function()
-      require("snacks").terminal.toggle(nil, { win = { position = "float" } })
+      require("snacks").terminal.toggle(nil, { win = { position = "float", border = "rounded" } })
     end,
     { desc = "浮动终端", noremap = true, silent = true },
   },
@@ -201,7 +201,7 @@ local M = {
     { "n", "t" },
     "<c-\\>",
     function()
-      require("snacks").terminal.toggle(nil, { win = { position = "float" } })
+      require("snacks").terminal.toggle(nil, { win = { position = "float", border = "rounded" } })
     end,
     { desc = "切换终端", noremap = true, silent = true },
   },
