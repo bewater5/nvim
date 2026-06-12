@@ -26,6 +26,11 @@ return {
       -- 模糊查找；vim.ui.select 也由 picker 渲染
       picker = {
         ui_select = true,
+        -- 输入框标题上的开关徽标（默认单字母 h/i 不直观）
+        toggles = {
+          hidden = "隐",
+          ignored = "忽",
+        },
         win = {
           input = {
             keys = {
