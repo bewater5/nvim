@@ -121,12 +121,5 @@ return {
       },
     })
     vim.cmd("colorscheme ayu")
-
-    -- bufferline 文件树偏移区的标题样式
-    vim.cmd(string.format(
-      [[:hi FileExplorerTitle guibg=%s guifg=%s gui=bold]],
-      colors.bg_color,
-      colors.semantic.folder
-    ))
   end,
 }

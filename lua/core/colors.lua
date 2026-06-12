@@ -17,10 +17,10 @@ M.palette = {
   fg_bright = "#ffffff", -- 搜索命中、当前行号、bufferline 活动文字、诊断标题
   fg_muted = "#808080",  -- bufferline 非活动标签文字
   fg_dark = "#3e4451",   -- 标志列
-  border = "#444b59",    -- 浮窗边框、窗口分隔线
+  border = "#cccccc",    -- 浮窗边框、窗口分隔线
 
   -- Ayu 主题色
-  blue = "#39bae6",   -- semantic.info / semantic.folder
+  blue = "#39bae6",   -- semantic.info
   yellow = "#ffb454", -- semantic.warning、bufferline 修改指示
   orange = "#ff8f40", -- bufferline 修改/关闭按钮
   red = "#f07178",    -- semantic.error
@@ -40,7 +40,6 @@ M.semantic = {
   info = M.palette.blue,
   hint = M.palette.cyan,
 
-  folder = M.palette.blue,      -- FileExplorerTitle（colorscheme.lua）
   separator = M.palette.border, -- WinSeparator（colorscheme.lua）
 }
 

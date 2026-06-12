@@ -30,14 +30,12 @@ return {
         show_duplicate_prefix = true, -- 显示重复文件名前缀
         persist_buffer_sort = true, -- 持久化缓冲区排序
         always_show_bufferline = true, -- 始终显示 bufferline
+        -- explorer 打开时标签栏让位，不显示标题
         offsets = {
           {
             filetype = "snacks_layout_box",
-            text = "📂 File Explorer",
-            highlight = "FileExplorerTitle",
-            text_align = "center",
+            text = "",
             separator = false,
-            padding = 1,
           },
         },
       },
