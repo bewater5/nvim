@@ -42,6 +42,10 @@ return {
           },
         },
       },
+      -- 窗口样式覆盖（snacks 浮窗默认无边框）
+      styles = {
+        lazygit = { border = "rounded" },
+      },
     })
 
     -- LazyGit 关闭后刷新 Git 状态
