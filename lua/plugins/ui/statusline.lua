@@ -6,9 +6,7 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local custom_theme = require("lualine.themes.ayu")
-    -- 使用统一的颜色管理：所有模式统一处理
-    -- c 段（中段）背景跟随 colors.bg_color（透明）
-    -- b 段（分支/diff）背景从 ayu 默认的纯黑 #000000 柔和化
+    -- 覆盖所有模式：c 段（中段）背景透明，b 段（分支/diff）柔和背景
     for _, mode in pairs(custom_theme) do
       if type(mode) == "table" then
         if mode.b then

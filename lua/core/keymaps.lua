@@ -103,7 +103,7 @@ local M = {
   end, { desc = "查看通知历史", noremap = true, silent = true } },
 
   -- ========== Flash跳转导航 ==========
-  -- 使用 flash.nvim 默认键位；S 不绑 visual 模式（让给 nvim-surround 的添加包围符）
+  -- S 不绑 visual 模式：visual 的 S 是 nvim-surround 的添加包围符
   {
     { "n", "x", "o" },
     "s",
@@ -196,7 +196,7 @@ local M = {
     end,
     { desc = "垂直终端", noremap = true, silent = true },
   },
-  -- t 模式也绑定，保持 toggleterm 在终端内按 <C-\> 关闭的习惯
+  -- t 模式同样绑定，终端内可直接按 <C-\> 关闭
   {
     { "n", "t" },
     "<c-\\>",

@@ -79,8 +79,7 @@ function M.setup()
     )
 
     -- 诊断符号颜色
-    -- 注意：背景必须跟随 colors.bg_color，
-    -- noice 的边框/图标高亮组（NoiceCmdlinePopupBorder 等）默认链接到 DiagnosticSign*
+    -- 背景须跟随 colors.bg_color：noice 边框/图标组默认链接到 DiagnosticSign*
     vim.cmd(
       string.format(
         [[

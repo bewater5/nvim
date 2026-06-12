@@ -1,4 +1,5 @@
--- 通知系统配置 (noice，通知弹窗渲染由 snacks.notifier 接管)
+-- 通知系统配置 (noice)
+-- 通知弹窗由 snacks.notifier 渲染（noice notify 视图的默认后端）
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
@@ -6,7 +7,6 @@ return {
     "MunifTanjim/nui.nvim",
   },
   config = function()
-    -- noice 配置（notify 视图默认后端为 { "snacks", "notify" }，自动走 snacks.notifier）
     require("noice").setup({
       lsp = {
         -- override markdown rendering so that plugins use **Treesitter**
@@ -36,6 +36,5 @@ return {
         lsp_doc_border = true, -- add a border to hover docs and signature help
       },
     })
-    -- 诊断配置已移至 lua/plugins/lsp/utils.lua 统一管理
   end,
 }

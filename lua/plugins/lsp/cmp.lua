@@ -7,7 +7,7 @@ function M.setup()
     -- <C-space> 手动触发，<C-e> 关闭，<C-b>/<C-f> 滚动文档，<C-k> 签名提示
     keymap = { preset = "enter" },
 
-    -- 使用 LuaSnip 作为片段引擎（snippets/ 目录的自定义片段不受影响）
+    -- LuaSnip 作为片段引擎
     snippets = { preset = "luasnip" },
 
     completion = {
