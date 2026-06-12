@@ -45,9 +45,10 @@ M.semantic = {
 
 -- ========== 组件颜色 ==========
 
--- 状态栏（ui/statusline.lua）
+-- 状态栏（ui/statusline.lua），a 段为 ayu 主题自带的模式色块
 M.lualine = {
-  bg = M.bg_color, -- a/b/c 全段背景
+  bg = M.palette.bg_cursor,        -- c 段（中段）背景
+  section_bg = M.palette.bg_light, -- b 段（分支/diff）背景
 }
 
 -- 缓冲区标签（ui/bufferline.lua）
