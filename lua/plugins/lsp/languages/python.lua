@@ -61,58 +61,8 @@ function M.setup(capabilities, on_attach)
   end
 end
 
--- Python 特定的格式化函数
-function M.format_python_file()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-  local ruff_client = nil
-  local black_client = nil
-  local pyright_client = nil
-
-  for _, client in ipairs(clients) do
-    if client.name == "ruff" then
-      ruff_client = client
-    elseif client.name == "black" then
-      black_client = client
-    elseif client.name == "pyright" then
-      pyright_client = client
-    end
-  end
-
-  -- 优先级：Ruff > Black > Pyright
-  if ruff_client then
-    vim.lsp.buf.format({
-      filter = function(c) return c.id == ruff_client.id end,
-      timeout_ms = 3000
-    })
-  elseif black_client then
-    vim.lsp.buf.format({
-      filter = function(c) return c.id == black_client.id end,
-      timeout_ms = 3000
-    })
-  elseif pyright_client then
-    vim.lsp.buf.format({
-      filter = function(c) return c.id == pyright_client.id end,
-      timeout_ms = 3000
-    })
-  end
-end
-
--- Python 特定的自动命令
+-- Python 文件的特殊设置（PEP8 缩进、折叠）
 function M.setup_autocmds()
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("PythonAutoFormat", { clear = true }),
-    pattern = "*.py",
-    callback = function()
-      -- 自动导入排序和格式化
-      vim.lsp.buf.code_action({
-        context = { only = { "source.organizeImports" } },
-        apply = true,
-      })
-      M.format_python_file()
-    end,
-  })
-
-  -- Python 文件的特殊设置
   vim.api.nvim_create_autocmd("FileType", {
     group = vim.api.nvim_create_augroup("PythonSettings", { clear = true }),
     pattern = "python",
@@ -125,11 +75,6 @@ function M.setup_autocmds()
 
       -- 设置行长度
       vim.bo.textwidth = 88 -- Black 的默认行长度
-
-      -- 启用 inlay hints（如果支持）
-      if vim.lsp.inlay_hint then
-        vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
-      end
 
       -- 设置折叠
       vim.wo.foldmethod = "indent"
@@ -148,25 +93,6 @@ function M.setup_keymaps(bufnr)
   vim.keymap.set("n", "<leader>pt", "<cmd>!python3 -m pytest<cr>", vim.tbl_extend("force", opts, { desc = "运行 pytest" }))
   vim.keymap.set("n", "<leader>pT", "<cmd>!python3 -m pytest %<cr>",
     vim.tbl_extend("force", opts, { desc = "运行当前文件的测试" }))
-end
-
--- 虚拟环境检测
-function M.detect_venv()
-  local venv_path = os.getenv("VIRTUAL_ENV")
-  if venv_path then
-    return venv_path .. "/bin/python"
-  end
-
-  -- 检查常见的虚拟环境目录
-  local common_venv_names = { "venv", ".venv", "env", ".env" }
-  for _, name in ipairs(common_venv_names) do
-    local path = vim.fn.getcwd() .. "/" .. name .. "/bin/python"
-    if vim.fn.executable(path) == 1 then
-      return path
-    end
-  end
-
-  return "python3" -- 默认使用系统 Python
 end
 
 return M
