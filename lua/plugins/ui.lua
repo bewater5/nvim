@@ -8,15 +8,12 @@ return {
   -- 缓冲区标签
   require("plugins.ui.bufferline"),
 
-  -- 文件浏览器
-  require("plugins.ui.explorer"),
+  -- 文件浏览器已由 snacks.nvim 的 explorer 模块接管（lua/plugins/snacks.lua）
 
   -- 通知系统
   require("plugins.ui.notifications"),
 
-  -- UI 增强插件
-  require("plugins.ui.enhancements")[1], -- dressing
-  require("plugins.ui.enhancements")[2], -- indent-blankline
+  -- UI 增强（dressing/indent-blankline 已由 snacks.nvim 的 input/picker/indent 模块接管）
 
   -- 启动屏幕
   -- require("plugins.ui.dashboard"),

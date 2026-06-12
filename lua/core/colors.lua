@@ -41,6 +41,11 @@ M.palette = {
   coral = "#e06c75",     -- 珊瑚色 (根文件夹)
 }
 
+-- ========== 透明背景 (Transparent Background) ==========
+-- 所有"透出终端背景"的高亮组统一引用此变量，
+-- 想恢复不透明背景时，改回色值（如 M.palette.bg_main）即可一次性替换
+M.transparent = "NONE"
+
 -- ========== 语义化颜色 (Semantic Colors) ==========
 -- 基于用途的颜色定义，便于理解和使用
 M.semantic = {
@@ -100,48 +105,10 @@ M.bufferline = {
   separator_fg = M.palette.separator, -- 分离器颜色
 }
 
--- NvimTree 颜色配置
-M.nvimtree = {
-  bg = M.palette.bg_alt,                 -- 文件树背景
-  separator_bg = M.palette.bg_separator, -- 标题背景
-  separator_fg = M.palette.bg_separator, -- 分离线颜色
-
-  -- 文件夹颜色
-  folder_icon = M.semantic.folder,
-  folder_name = M.semantic.folder,
-  folder_opened = M.palette.gold,
-  folder_root = M.palette.coral,
-
-  -- 文件颜色
-  file_normal = M.semantic.file_normal,
-  file_opened = M.semantic.file_opened,
-  file_executable = M.semantic.file_executable,
-  file_special = M.semantic.file_special,
-  file_symlink = M.semantic.file_symlink,
-
-  -- Git 状态
-  git_dirty = M.semantic.git_modified,
-  git_staged = M.semantic.git_added,
-  git_new = M.semantic.git_added,
-  git_deleted = M.semantic.git_deleted,
-  git_ignored = M.semantic.git_ignored,
-
-  -- UI 元素
-  indent_marker = M.semantic.separator,
-  cursor_line = M.semantic.selection,
-}
-
--- Telescope 颜色配置
-M.telescope = {
-  border = M.semantic.border,
-  selection = M.semantic.selection,
-  match = M.semantic.warning,
-}
-
 -- 诊断浮窗颜色配置
 M.diagnostic = {
   -- 浮窗背景和边框
-  float_bg = M.palette.bg_main,    -- 浮窗背景色
+  float_bg = M.transparent,         -- 浮窗背景色（透明，随主背景）
   float_border = M.palette.fg_dark, -- 浮窗边框色
 
   -- 诊断文本颜色

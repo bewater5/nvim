@@ -32,7 +32,7 @@ return {
         always_show_bufferline = true, -- 始终显示 bufferline
         offsets = {
           {
-            filetype = "NvimTree",
+            filetype = "snacks_layout_box",
             text = "📂 File Explorer",
             highlight = "FileExplorerTitle",
             text_align = "center",

@@ -8,10 +8,10 @@ return {
 
     -- 快捷按键
     dashboard.section.buttons.val = {
-      dashboard.button("f", "  查找文件", ":Telescope find_files <CR>"),
+      dashboard.button("f", "  查找文件", ":lua require('snacks').picker.files()<CR>"),
       dashboard.button("e", "  新文件", ":ene <BAR> startinsert <CR>"),
-      dashboard.button("r", "  最近文件", ":Telescope oldfiles <CR>"),
-      dashboard.button("t", "  查找文本", ":Telescope live_grep <CR>"),
+      dashboard.button("r", "  最近文件", ":lua require('snacks').picker.recent()<CR>"),
+      dashboard.button("t", "  查找文本", ":lua require('snacks').picker.grep()<CR>"),
       dashboard.button("q", "  退出", ":qa<CR>"),
     }
 

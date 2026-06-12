@@ -1,32 +1,18 @@
--- 通知系统配置 (noice + nvim-notify)
-local colors = require("core.colors")
-
+-- 通知系统配置 (noice，通知弹窗渲染由 snacks.notifier 接管)
 return {
   "folke/noice.nvim",
   event = "VeryLazy",
   dependencies = {
     "MunifTanjim/nui.nvim",
-    "rcarriga/nvim-notify",
   },
   config = function()
-    -- notify 配置
-    require("notify").setup({
-      stages = "fade_in_slide_out",
-      timeout = 3000,
-      max_width = 50, -- 设置通知窗口的最大宽度
-      max_height = 10, -- 设置通知窗口的最大高度
-      background_colour = colors.palette.bg_very_dark, -- 使用统一的颜色
-      minimum_width = 20, -- 设置通知窗口的最小宽度
-    })
-
-    -- noice 配置
+    -- noice 配置（notify 视图默认后端为 { "snacks", "notify" }，自动走 snacks.notifier）
     require("noice").setup({
       lsp = {
-        -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+        -- override markdown rendering so that plugins use **Treesitter**
         override = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
-          ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
         },
       },
       -- 过滤消息路由

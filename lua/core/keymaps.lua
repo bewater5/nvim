@@ -35,7 +35,7 @@ local M = {
   { "n", "<leader>W", ":wall<CR>", { desc = "保存所有文件", noremap = true, silent = true } },
   { "n", "<leader>sv", ":vsplit<CR>", { desc = "垂直分割窗口", noremap = true, silent = true } },
   { "n", "<leader>sh", ":split<CR>", { desc = "水平分割窗口", noremap = true, silent = true } },
-  { "n", "<leader>se", "<C-w>=", { desc = "等分窗口", noremap = true, silent = true } },
+  -- 等分窗口请用原生 <C-w>= （<leader>se 已用于编辑代码片段）
 
   -- 保存文件
   { "n", "<leader>w", ":w<CR>", { desc = "保存文件", noremap = true, silent = true } },
@@ -43,12 +43,12 @@ local M = {
   { "i", "<C-s>", "<Esc>:w<CR>a", { desc = "保存文件", noremap = true, silent = true } },
 
   -- ========== 缓冲区和标签页管理 ==========
-  -- 缓冲区管理（使用 mini.bufremove 保留窗口布局）
+  -- 缓冲区管理（使用 Snacks.bufdelete 保留窗口布局）
   { "n", "<leader>q", function()
-    require('mini.bufremove').delete(0, false)
+    require("snacks").bufdelete()
   end, { desc = "删除 buffer", noremap = true, silent = true } },
   { "n", "<leader>qq", function()
-    require('mini.bufremove').delete(0, true)
+    require("snacks").bufdelete({ force = true })
   end, { desc = "强制删除 buffer", noremap = true, silent = true } },
   { "n", "<leader>qa", function()
     vim.cmd('%bd|e#|bd#')
@@ -66,38 +66,84 @@ local M = {
   { "n", "t[", ":tabp<CR>", { desc = "上一个标签页", noremap = true, silent = true } },
   { "n", "t]", ":tabn<CR>", { desc = "下一个标签页", noremap = true, silent = true } },
 
-  -- ========== 文件浏览器 (nvim-tree) ==========
-  { "n", "<leader>o", ":NvimTreeToggle<CR>", { desc = "切换文件浏览器", noremap = true, silent = true } },
+  -- ========== 文件浏览器 (Snacks.explorer) ==========
+  { "n", "<leader>o", function()
+    require("snacks").explorer()
+  end, { desc = "切换文件浏览器", noremap = true, silent = true } },
 
-  -- ========== 搜索和查找 (Telescope) ==========
+  -- ========== 搜索和查找 (Snacks.picker) ==========
   -- 基础搜索
-  { "n", "<leader><space>", "<cmd>Telescope find_files<cr>", { desc = "查找文件", noremap = true, silent = true } },
-  { "n", "<leader>fg", "<cmd>Telescope live_grep<cr>", { desc = "通过Grep查找", noremap = true, silent = true } },
-  { "n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "查找缓冲区", noremap = true, silent = true } },
-  { "n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "查找帮助", noremap = true, silent = true } },
+  { "n", "<leader><space>", function()
+    require("snacks").picker.files()
+  end, { desc = "查找文件", noremap = true, silent = true } },
+  { "n", "<leader>fg", function()
+    require("snacks").picker.grep()
+  end, { desc = "通过Grep查找", noremap = true, silent = true } },
+  { "n", "<leader>fb", function()
+    require("snacks").picker.buffers()
+  end, { desc = "查找缓冲区", noremap = true, silent = true } },
+  { "n", "<leader>fh", function()
+    require("snacks").picker.help()
+  end, { desc = "查找帮助", noremap = true, silent = true } },
 
   -- 高级搜索
+  { "n", "<leader>fa", function()
+    require("snacks").picker.files({ hidden = true })
+  end, { desc = "查找所有文件（包括隐藏文件）", noremap = true, silent = true } },
+  { "n", "<leader>fw", function()
+    require("snacks").picker.grep_word()
+  end, { desc = "查找当前单词", noremap = true, silent = true } },
+  { "n", "<leader>fr", function()
+    require("snacks").picker.recent()
+  end, { desc = "查找最近文件", noremap = true, silent = true } },
+
+  -- 查看通知历史（snacks.notifier）
+  { "n", "<leader>no", function()
+    require("snacks").notifier.show_history()
+  end, { desc = "查看通知历史", noremap = true, silent = true } },
+
+  -- ========== Flash跳转导航 ==========
+  -- 使用 flash.nvim 默认键位；S 不绑 visual 模式（让给 nvim-surround 的添加包围符）
   {
-    "n",
-    "<leader>fa",
-    "<cmd>Telescope find_files hidden=true<cr>",
-    { desc = "查找所有文件（包括隐藏文件）", noremap = true, silent = true },
+    { "n", "x", "o" },
+    "s",
+    function()
+      require("flash").jump()
+    end,
+    { desc = "Flash跳转", noremap = true },
   },
   {
-    "n",
-    "<leader>fw",
-    "<cmd>Telescope grep_string<cr>",
-    { desc = "查找当前单词", noremap = true, silent = true },
+    { "n", "o" },
+    "S",
+    function()
+      require("flash").treesitter()
+    end,
+    { desc = "Flash Treesitter选择", noremap = true },
   },
-  { "n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "查找最近文件", noremap = true, silent = true } },
-
-  -- 查看通知历史
-  { "n", "<leader>no", "<cmd>Telescope notify<cr>", { desc = "查看通知历史", noremap = true, silent = true } },
-
-  -- ========== Leap跳转导航 ==========
-  { { "n", "x", "o" }, "<leader>j", "<Plug>(leap-forward-to)", { desc = "Leap向前跳转", noremap = true } },
-  { { "n", "x", "o" }, "<leader>k", "<Plug>(leap-backward-to)", { desc = "Leap向后跳转", noremap = true } },
-  { { "n", "x", "o" }, "<leader>g", "<Plug>(leap-from-window)", { desc = "Leap跨窗口搜索", noremap = true } },
+  {
+    "o",
+    "r",
+    function()
+      require("flash").remote()
+    end,
+    { desc = "Flash远程操作", noremap = true },
+  },
+  {
+    { "o", "x" },
+    "R",
+    function()
+      require("flash").treesitter_search()
+    end,
+    { desc = "Flash Treesitter搜索", noremap = true },
+  },
+  {
+    "c",
+    "<C-s>",
+    function()
+      require("flash").toggle()
+    end,
+    { desc = "切换Flash搜索", noremap = true },
+  },
 
   -- ========== 会话管理 (Persistence) ==========
   {
@@ -125,34 +171,52 @@ local M = {
     { desc = "不要保存当前会话", noremap = true, silent = true },
   },
 
-  -- ========== 终端管理 (ToggleTerm) ==========
+  -- ========== 终端管理 (Snacks.terminal) ==========
   {
     "n",
     "<leader>tt",
-    "<cmd>ToggleTerm direction=float<cr>",
+    function()
+      require("snacks").terminal.toggle(nil, { win = { position = "float" } })
+    end,
     { desc = "浮动终端", noremap = true, silent = true },
   },
   {
     "n",
     "<leader>th",
-    "<cmd>ToggleTerm direction=horizontal<cr>",
+    function()
+      require("snacks").terminal.toggle(nil, { win = { position = "bottom", height = 20 } })
+    end,
     { desc = "水平终端", noremap = true, silent = true },
   },
   {
     "n",
     "<leader>tv",
-    "<cmd>ToggleTerm direction=vertical<cr>",
+    function()
+      require("snacks").terminal.toggle(nil, { win = { position = "right" } })
+    end,
     { desc = "垂直终端", noremap = true, silent = true },
   },
-  { "n", "<c-\\>", "<cmd>ToggleTerm<cr>", { desc = "切换终端", noremap = true, silent = true } },
+  -- t 模式也绑定，保持 toggleterm 在终端内按 <C-\> 关闭的习惯
+  {
+    { "n", "t" },
+    "<c-\\>",
+    function()
+      require("snacks").terminal.toggle(nil, { win = { position = "float" } })
+    end,
+    { desc = "切换终端", noremap = true, silent = true },
+  },
 
   -- ========== Git操作 ==========
   { "n", "<leader>gs", "<cmd>Git<cr>", { desc = "Git 状态", noremap = true, silent = true } },
-  { "n", "<c-g>", "<cmd>nohlsearch<cr><cmd>LazyGit<cr>", { desc = "LazyGit", noremap = true, silent = true } },
+  { "n", "<c-g>", function()
+    vim.cmd("nohlsearch")
+    require("snacks").lazygit()
+  end, { desc = "LazyGit", noremap = true, silent = true } },
 
   -- ========== Copilot ==========
-  { "i", "<C-j>", "copilot#Next()", { expr = true, silent = true, desc = "下一个Copilot建议" } },
-  { "i", "<C-k>", "copilot#Previous()", { expr = true, silent = true, desc = "上一个Copilot建议" } },
+  -- 注意：<C-j>/<C-k> 已被 nvim-cmp 占用（补全/片段跳转），Copilot 循环建议改用 <M-]>/<M-[>
+  { "i", "<M-]>", "copilot#Next()", { expr = true, silent = true, desc = "下一个Copilot建议" } },
+  { "i", "<M-[>", "copilot#Previous()", { expr = true, silent = true, desc = "上一个Copilot建议" } },
 
   -- ========== 代码格式化 ==========
   {
@@ -164,6 +228,18 @@ local M = {
     { desc = "格式化代码", noremap = true, silent = true },
   },
   { "n", "<leader>fl", "<cmd>EslintFixAll<cr>", { desc = "格式化 ESLint 代码", noremap = true, silent = true } },
+
+  -- ========== UI 切换 ==========
+  -- 切换 inlay hints（行内类型/参数提示），默认关闭
+  {
+    "n",
+    "<leader>uh",
+    function()
+      local enabled = vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
+      vim.lsp.inlay_hint.enable(not enabled, { bufnr = 0 })
+    end,
+    { desc = "切换 Inlay Hints", noremap = true, silent = true },
+  },
 
   -- ========== 代码片段管理 ==========
   {
@@ -214,9 +290,13 @@ local function setup_lsp_keymaps(bufnr)
   vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, vim.tbl_extend("force", opts, { desc = "重命名符号" }))
   vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, vim.tbl_extend("force", opts, { desc = "代码操作" }))
 
-  -- 打开诊断列表（Telescope）
-  vim.keymap.set("n", "<leader>de", "<cmd>Telescope diagnostics bufnr=0<CR>", { desc = "当前文件诊断列表" })
-  vim.keymap.set("n", "<leader>dw", "<cmd>Telescope diagnostics<CR>", { desc = "工作区诊断列表" })
+  -- 打开诊断列表（Snacks.picker）
+  vim.keymap.set("n", "<leader>de", function()
+    require("snacks").picker.diagnostics_buffer()
+  end, { desc = "当前文件诊断列表" })
+  vim.keymap.set("n", "<leader>dw", function()
+    require("snacks").picker.diagnostics()
+  end, { desc = "工作区诊断列表" })
 
   -- 格式化
   vim.keymap.set("n", "<leader>F", function()
@@ -280,38 +360,6 @@ local function setup_gitsigns_keymaps(bufnr)
   map("n", "<leader>td", gs.toggle_deleted, { desc = "切换删除显示" })
 end
 
--- NvimTree 专用键映射函数
-local function setup_nvimtree_keymaps(bufnr)
-  local api = require("nvim-tree.api")
-
-  local function opts(desc)
-    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-  end
-
-  vim.keymap.set("n", "<CR>", api.node.open.edit, opts("打开"))
-  vim.keymap.set("n", "l", api.node.open.edit, opts("打开"))
-  vim.keymap.set("n", "<Tab>", api.node.open.edit, opts("打开"))
-  vim.keymap.set("n", "h", api.node.navigate.parent_close, opts("关闭目录"))
-  vim.keymap.set("n", "v", api.node.open.vertical, opts("垂直分割打开"))
-  vim.keymap.set("n", "s", api.node.open.horizontal, opts("水平分割打开"))
-  vim.keymap.set("n", "t", api.node.open.tab, opts("新标签页打开"))
-  vim.keymap.set("n", "<C-k>", api.node.show_info_popup, opts("信息"))
-  vim.keymap.set("n", "a", api.fs.create, opts("创建"))
-  vim.keymap.set("n", "d", api.fs.remove, opts("删除"))
-  vim.keymap.set("n", "r", api.fs.rename, opts("重命名"))
-  vim.keymap.set("n", "c", api.fs.copy.node, opts("复制"))
-  vim.keymap.set("n", "x", api.fs.cut, opts("剪切"))
-  vim.keymap.set("n", "p", api.fs.paste, opts("粘贴"))
-  vim.keymap.set("n", "y", api.fs.copy.filename, opts("复制文件名"))
-  vim.keymap.set("n", "Y", api.fs.copy.relative_path, opts("复制相对路径"))
-  vim.keymap.set("n", "gy", api.fs.copy.absolute_path, opts("复制绝对路径"))
-  vim.keymap.set("n", "I", api.tree.toggle_gitignore_filter, opts("切换 Git 忽略"))
-  vim.keymap.set("n", "H", api.tree.toggle_hidden_filter, opts("切换隐藏文件"))
-  vim.keymap.set("n", "R", api.tree.reload, opts("刷新"))
-  vim.keymap.set("n", "?", api.tree.toggle_help, opts("帮助"))
-  vim.keymap.set("n", "<Esc>", api.tree.close, opts("关闭文件树"))
-end
-
 -- 应用基础键映射
 for _, mapping in ipairs(M) do
   local mode = mapping[1]
@@ -324,7 +372,6 @@ end
 -- 导出函数供插件使用
 _G.setup_lsp_keymaps = setup_lsp_keymaps
 _G.setup_gitsigns_keymaps = setup_gitsigns_keymaps
-_G.setup_nvimtree_keymaps = setup_nvimtree_keymaps
 
 -- ========== 搜索后自动取消高亮 ==========
 local search_timer = nil -- 用于存储定时器

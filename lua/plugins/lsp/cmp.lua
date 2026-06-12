@@ -1,63 +1,33 @@
--- nvim-cmp 自动补全配置
+-- blink.cmp 自动补全配置
 local M = {}
 
 function M.setup()
-  local cmp = require("cmp")
-  local luasnip = require("luasnip")
+  require("blink.cmp").setup({
+    -- enter 预设：<CR> 确认，<C-n>/<C-p> 选择，<Tab>/<S-Tab> 片段跳转，
+    -- <C-space> 手动触发，<C-e> 关闭，<C-b>/<C-f> 滚动文档，<C-k> 签名提示
+    keymap = { preset = "enter" },
 
-  ---@diagnostic disable-next-line: redundant-parameter
-  cmp.setup({
-    snippet = {
-      expand = function(args)
-        luasnip.lsp_expand(args.body)
-      end,
-    },
+    -- 使用 LuaSnip 作为片段引擎（snippets/ 目录的自定义片段不受影响）
+    snippets = { preset = "luasnip" },
+
     completion = {
-      completeopt = "menu,menuone,noinsert",
-    },
-    window = {
-      completion = cmp.config.window.bordered({
+      -- 预选中第一项但不自动插入，<CR> 确认后才上屏
+      list = {
+        selection = { preselect = true, auto_insert = false },
+      },
+      menu = {
         border = "rounded",
-        winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
-      }),
-      documentation = cmp.config.window.bordered({
-        border = "rounded",
-      }),
+        winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+      },
+      documentation = {
+        auto_show = true,
+        window = { border = "rounded" },
+      },
     },
-    mapping = cmp.mapping.preset.insert({
-      ["<C-q>"] = cmp.mapping.abort(),                   -- 关闭补全窗口
-      ["<CR>"] = cmp.mapping.confirm({ select = true }), -- 确认选择
-      -- 滚动文档
-      ["<C-y>"] = cmp.mapping.scroll_docs(-4),
-      ["<C-e>"] = cmp.mapping.scroll_docs(4),
 
-      -- 使用 Tab 进行片段跳转和补全选择
-      ["<C-j>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.jumpable(1) then
-          luasnip.jump(1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-
-      ["<C-k>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-    }),
-    sources = cmp.config.sources({
-      { name = "nvim_lsp" },
-      { name = "luasnip" },
-      { name = "buffer" },
-      { name = "path" },
-    }),
+    sources = {
+      default = { "lsp", "snippets", "buffer", "path" },
+    },
   })
 end
 

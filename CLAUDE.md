@@ -10,7 +10,7 @@
 
 - Neovim >= 0.11.0
 - Node.js >= 18.0（用于 LSP 服务器）
-- ripgrep（用于 Telescope 实时搜索）
+- ripgrep（用于 Snacks picker 实时搜索）
 - Nerd Font 字体（用于图标显示）
 
 ## 架构
@@ -33,10 +33,13 @@
 ### UI 组件 (`lua/plugins/ui/`)
 - `statusline.lua` - Lualine 配置
 - `bufferline.lua` - 缓冲区标签
-- `explorer.lua` - NvimTree 文件浏览器
-- `dashboard.lua` - 启动屏幕
-- `notifications.lua` - Noice/notify 设置
-- `enhancements.lua` - 其他 UI 增强
+- `dashboard.lua` - 启动屏幕（当前已在 ui.lua 中注释停用）
+- `notifications.lua` - Noice 设置（通知弹窗渲染由 snacks.notifier 接管）
+
+### 多功能工具集 (`lua/plugins/snacks.lua`)
+snacks.nvim，已启用 bigfile、quickfile、indent、input、notifier、picker、explorer
+模块（picker 替代 telescope，explorer 替代 nvim-tree），并提供 terminal、lazygit、
+bufdelete 功能（键位在 core/keymaps.lua）
 
 ### 自定义代码片段 (`snippets/`)
 按文件类型组织的 LuaSnip 代码片段：`lua.lua`、`javascript.lua`、`typescript.lua`、`vue.lua`、`all.lua`
@@ -52,12 +55,12 @@
 - 插件专用键映射：使用导出的设置函数模式（如 `_G.setup_lsp_keymaps`）
 
 ### 颜色自定义
-所有颜色集中在 `lua/core/colors.lua` 中。使用 `M.palette` 获取基础颜色，`M.semantic` 获取语义化颜色，或使用组件专用表（如 `M.nvimtree`、`M.bufferline`）。
+所有颜色集中在 `lua/core/colors.lua` 中。使用 `M.palette` 获取基础颜色，`M.semantic` 获取语义化颜色，或使用组件专用表（如 `M.bufferline`）。透明背景统一由 `M.transparent` 控制。
 
 ## 重要键位
 
 - `<Space>` - Leader 键
-- `<leader><space>` - 查找文件（Telescope）
+- `<leader><space>` - 查找文件（Snacks picker）
 - `<leader>fg` - 实时搜索
 - `<leader>o` - 切换文件浏览器
 - `<C-\>` - 切换终端

@@ -1,13 +1,4 @@
 return {
-  -- Buffer 管理 - 智能删除 buffer（保留窗口）
-  {
-    "echasnovski/mini.bufremove",
-    event = "VeryLazy",
-    config = function()
-      require('mini.bufremove').setup()
-    end,
-  },
-
   -- 自动配对
   {
     "windwp/nvim-autopairs",
@@ -19,15 +10,8 @@ return {
           lua = { "string", "source" },
           javascript = { "string", "template_string" },
         },
-        disable_filetype = { "TelescopePrompt", "spectre_panel" },
+        disable_filetype = { "snacks_picker_input", "spectre_panel" },
       })
-
-      -- 将自动配对与cmp集成
-      local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-      local cmp_status_ok, cmp = pcall(require, "cmp")
-      if cmp_status_ok then
-        cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-      end
     end,
   },
 
@@ -84,15 +68,12 @@ return {
     end,
   },
 
-  -- 增强f/t移动
+  -- 快速跳转
   {
-    "ggandor/leap.nvim",
-    event = { "BufReadPre", "BufNewFile" },
+    "folke/flash.nvim",
+    event = "VeryLazy",
     config = function()
-      require("leap").setup({
-        -- 禁用默认键映射，使用自定义键映射
-        default_keymaps = false,
-      })
+      require("flash").setup({})
       -- 键盘映射已移至 lua/core/keymaps.lua 文件中统一管理
     end,
   },
@@ -161,39 +142,6 @@ return {
         -- 支持的文件类型
         per_filetype = per_filetype,
       })
-    end,
-  },
-
-  -- 增强终端集成
-  {
-    "akinsho/toggleterm.nvim",
-    version = "*",
-    -- 键盘映射已移至 lua/core/keymaps.lua 文件中统一管理
-    config = function()
-      require("toggleterm").setup({
-        size = 20,
-        open_mapping = [[<c-\>]],
-        hide_numbers = true,
-        shade_filetypes = {},
-        shade_terminals = true,
-        shading_factor = 2,
-        start_in_insert = true,
-        insert_mappings = true,
-        persist_size = true,
-        direction = "float",
-        close_on_exit = true,
-        shell = vim.o.shell,
-        float_opts = {
-          border = "curved",
-          winblend = 0,
-          highlights = {
-            border = "Normal",
-            background = "Normal",
-          },
-        },
-      })
-
-      -- 终端中的键盘映射已移至 lua/core/keymaps.lua 文件中统一管理
     end,
   },
 }

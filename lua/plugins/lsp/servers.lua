@@ -2,7 +2,7 @@
 local M = {}
 
 function M.setup()
-  local capabilities = require("cmp_nvim_lsp").default_capabilities()
+  local capabilities = require("blink.cmp").get_lsp_capabilities()
 
   -- 设置按键映射函数 - 键映射已移至 lua/core/keymaps.lua 文件中统一管理
   local on_attach = function(client, bufnr)
