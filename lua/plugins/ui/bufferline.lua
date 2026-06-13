@@ -30,14 +30,12 @@ return {
         show_duplicate_prefix = true, -- 显示重复文件名前缀
         persist_buffer_sort = true, -- 持久化缓冲区排序
         always_show_bufferline = true, -- 始终显示 bufferline
+        -- explorer 打开时标签栏让位，不显示标题
         offsets = {
           {
-            filetype = "NvimTree",
-            text = "📂 File Explorer",
-            highlight = "FileExplorerTitle",
-            text_align = "center",
+            filetype = "snacks_layout_box",
+            text = "",
             separator = false,
-            padding = 1,
           },
         },
       },
@@ -60,7 +58,7 @@ return {
         },
         buffer_visible = {
           fg = colors.palette.fg_muted,
-          bg = colors.palette.bg_light,
+          bg = colors.bufferline.visible_bg,
         },
 
         -- ========== 指示器配置 ==========
@@ -74,7 +72,7 @@ return {
         -- 可见标签的指示器
         indicator_visible = {
           fg = "None",
-          bg = colors.palette.bg_light,
+          bg = colors.bufferline.visible_bg,
         },
         modified = {
           fg = colors.semantic.warning,
@@ -88,7 +86,7 @@ return {
         },
         modified_visible = {
           fg = colors.semantic.warning,
-          bg = colors.palette.bg_light,
+          bg = colors.bufferline.visible_bg,
         },
         -- LSP 诊断颜色
         error = {
@@ -138,7 +136,7 @@ return {
         },
         duplicate_visible = {
           fg = colors.palette.fg_dim,
-          bg = colors.palette.bg_light,
+          bg = colors.bufferline.visible_bg,
           italic = true,
         },
         duplicate = {
@@ -160,7 +158,7 @@ return {
         highlight! BufferLineHintSelected guifg=]] .. colors.semantic.hint .. [[ gui=underline
         " 重复文件名前缀的背景色
         highlight! BufferLineDuplicateSelected guifg=]] .. colors.palette.fg_dim .. [[ guibg=]] .. colors.bufferline.active_bg .. [[ gui=italic,underline
-        highlight! BufferLineDuplicateVisible guifg=]] .. colors.palette.fg_dim .. [[ guibg=]] .. colors.palette.bg_light .. [[ gui=italic
+        highlight! BufferLineDuplicateVisible guifg=]] .. colors.palette.fg_dim .. [[ guibg=]] .. colors.bufferline.visible_bg .. [[ gui=italic
         highlight! BufferLineDuplicate guifg=]] .. colors.palette.fg_dim .. [[ guibg=]] .. colors.bufferline.inactive_bg .. [[ gui=italic
       ]])
     end)

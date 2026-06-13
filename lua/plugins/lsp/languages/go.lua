@@ -62,42 +62,8 @@ function M.setup(capabilities, on_attach)
   })
 end
 
--- Go 特定的格式化函数
-function M.format_go_file()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-  local gopls_client = nil
-
-  for _, client in ipairs(clients) do
-    if client.name == "gopls" then
-      gopls_client = client
-      break
-    end
-  end
-
-  if gopls_client then
-    vim.lsp.buf.format({
-      filter = function(c) return c.id == gopls_client.id end,
-      timeout_ms = 3000
-    })
-  end
-end
-
--- Go 特定的自动命令
+-- Go 文件的特殊设置（tab 缩进、折叠）
 function M.setup_autocmds()
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("GoAutoFormat", { clear = true }),
-    pattern = { "*.go" },
-    callback = function()
-      -- 自动导入和格式化
-      vim.lsp.buf.code_action({
-        context = { only = { "source.organizeImports" } },
-        apply = true,
-      })
-      M.format_go_file()
-    end,
-  })
-
-  -- Go 文件的特殊设置
   vim.api.nvim_create_autocmd("FileType", {
     group = vim.api.nvim_create_augroup("GoSettings", { clear = true }),
     pattern = "go",
@@ -106,11 +72,6 @@ function M.setup_autocmds()
       vim.bo.tabstop = 4
       vim.bo.shiftwidth = 4
       vim.bo.expandtab = false
-
-      -- 启用 inlay hints（如果支持）
-      if vim.lsp.inlay_hint then
-        vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
-      end
 
       -- 设置折叠
       vim.wo.foldmethod = "syntax"

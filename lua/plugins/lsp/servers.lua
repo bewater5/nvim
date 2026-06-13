@@ -2,7 +2,7 @@
 local M = {}
 
 function M.setup()
-  local capabilities = require("cmp_nvim_lsp").default_capabilities()
+  local capabilities = require("blink.cmp").get_lsp_capabilities()
 
   -- 设置按键映射函数 - 键映射已移至 lua/core/keymaps.lua 文件中统一管理
   local on_attach = function(client, bufnr)
@@ -26,10 +26,13 @@ function M.setup()
     basic = require("plugins.lsp.languages.basic"),
   }
 
-  -- 设置各语言的 LSP
+  -- 设置各语言的 LSP，并接通各语言的 FileType 设置（缩进/折叠等）
   for name, lang_module in pairs(languages) do
     if lang_module.setup then
       lang_module.setup(capabilities, on_attach)
+    end
+    if lang_module.setup_autocmds then
+      lang_module.setup_autocmds()
     end
   end
 

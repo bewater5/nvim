@@ -126,57 +126,8 @@ function M.setup(capabilities, on_attach)
   end
 end
 
--- 基础语言的格式化函数
-function M.format_basic_file()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-  local prettier_client = nil
-  local lsp_client = nil
-
-  for _, client in ipairs(clients) do
-    if client.name == "prettier" then
-      prettier_client = client
-    elseif client.server_capabilities.documentFormattingProvider then
-      lsp_client = client
-    end
-  end
-
-  -- 优先使用 Prettier，其次使用对应的 LSP
-  if prettier_client then
-    vim.lsp.buf.format({
-      filter = function(c) return c.id == prettier_client.id end,
-      timeout_ms = 2000
-    })
-  elseif lsp_client then
-    vim.lsp.buf.format({
-      filter = function(c) return c.id == lsp_client.id end,
-      timeout_ms = 2000
-    })
-  end
-end
-
--- 基础语言的自动命令
+-- 基础语言文件的特殊设置（Markdown）
 function M.setup_autocmds()
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("BasicLangAutoFormat", { clear = true }),
-    pattern = { "*.json", "*.jsonc", "*.html", "*.htm", "*.css", "*.scss", "*.less", "*.yaml", "*.yml", "*.md" },
-    callback = function()
-      M.format_basic_file()
-    end,
-  })
-
-  -- 各种文件类型的特殊设置
-  vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("BasicLangSettings", { clear = true }),
-    pattern = { "json", "jsonc", "html", "css", "scss", "less", "yaml", "yml" },
-    callback = function()
-      -- 设置缩进
-      vim.bo.tabstop = 2
-      vim.bo.shiftwidth = 2
-      vim.bo.expandtab = true
-    end,
-  })
-
-  -- Markdown 特殊设置
   vim.api.nvim_create_autocmd("FileType", {
     group = vim.api.nvim_create_augroup("MarkdownSettings", { clear = true }),
     pattern = "markdown",

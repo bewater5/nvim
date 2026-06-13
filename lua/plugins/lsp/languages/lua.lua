@@ -73,60 +73,12 @@ function M.setup(capabilities, on_attach)
   })
 end
 
--- Lua 特定的格式化函数
-function M.format_lua_file()
-  local clients = vim.lsp.get_clients({ bufnr = 0 })
-  local stylua_client = nil
-  local lua_ls_client = nil
-
-  for _, client in ipairs(clients) do
-    if client.name == "stylua" then
-      stylua_client = client
-    elseif client.name == "lua_ls" then
-      lua_ls_client = client
-    end
-  end
-
-  -- 优先使用 StyLua，其次使用 lua_ls
-  if stylua_client then
-    vim.lsp.buf.format({
-      filter = function(c) return c.id == stylua_client.id end,
-      timeout_ms = 2000
-    })
-  elseif lua_ls_client then
-    vim.lsp.buf.format({
-      filter = function(c) return c.id == lua_ls_client.id end,
-      timeout_ms = 2000
-    })
-  end
-end
-
--- Lua 特定的自动命令
+-- Lua 文件的特殊设置（折叠）
 function M.setup_autocmds()
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    group = vim.api.nvim_create_augroup("LuaAutoFormat", { clear = true }),
-    pattern = "*.lua",
-    callback = function()
-      M.format_lua_file()
-    end,
-  })
-
-  -- Lua 文件的特殊设置
   vim.api.nvim_create_autocmd("FileType", {
     group = vim.api.nvim_create_augroup("LuaSettings", { clear = true }),
     pattern = "lua",
     callback = function()
-      -- 设置缩进
-      vim.bo.tabstop = 2
-      vim.bo.shiftwidth = 2
-      vim.bo.expandtab = true
-
-      -- 启用 inlay hints（如果支持）
-      if vim.lsp.inlay_hint then
-        vim.lsp.inlay_hint.enable(true, { bufnr = 0 })
-      end
-
-      -- 设置折叠
       vim.wo.foldmethod = "indent"
       vim.wo.foldlevel = 99
     end,

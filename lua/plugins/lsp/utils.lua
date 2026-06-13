@@ -79,6 +79,7 @@ function M.setup()
     )
 
     -- 诊断符号颜色
+    -- 背景须跟随 colors.bg_color：noice 边框/图标组默认链接到 DiagnosticSign*
     vim.cmd(
       string.format(
         [[
@@ -88,13 +89,13 @@ function M.setup()
       highlight! DiagnosticSignHint guifg=%s guibg=%s
     ]],
         colors.diagnostic.error_sign,
-        colors.palette.bg_main,
+        colors.bg_color,
         colors.diagnostic.warning_sign,
-        colors.palette.bg_main,
+        colors.bg_color,
         colors.diagnostic.info_sign,
-        colors.palette.bg_main,
+        colors.bg_color,
         colors.diagnostic.hint_sign,
-        colors.palette.bg_main
+        colors.bg_color
       )
     )
   end)

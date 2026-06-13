@@ -58,11 +58,4 @@ return {
       end
     end,
   },
-
-  -- cmp_luasnip - 将 LuaSnip 与 nvim-cmp 集成
-  {
-    "saadparwaiz1/cmp_luasnip",
-    event = "InsertEnter",
-    dependencies = { "L3MON4D3/LuaSnip" },
-  },
 }

@@ -1,0 +1,93 @@
+-- snacks.nvim 多功能工具集
+-- terminal / lazygit / bufdelete 模块按需调用，键位在 core/keymaps.lua
+return {
+  "folke/snacks.nvim",
+  priority = 1000,
+  lazy = false,
+  config = function()
+    require("snacks").setup({
+      -- 大文件自动降级（关闭高亮等重型功能，避免卡顿）
+      bigfile = { enabled = true },
+      -- 加速文件首次打开渲染
+      quickfile = { enabled = true },
+      -- 缩进参考线
+      indent = {
+        enabled = true,
+        animate = { enabled = false },
+      },
+      -- 左侧列：sign（诊断/书签）+ 行号 + git 状态条 + 折叠，各占固定位置
+      statuscolumn = { enabled = true },
+      -- vim.ui.input 美化（重命名等输入框）
+      input = { enabled = true },
+      -- 通知渲染
+      notifier = { enabled = true },
+      -- 文件浏览器（q 关闭）
+      explorer = { enabled = true },
+      -- 模糊查找；vim.ui.select 也由 picker 渲染
+      picker = {
+        ui_select = true,
+        -- 输入框标题上的开关徽标
+        toggles = {
+          hidden = "H", -- 正在显示隐藏文件
+          ignored = "I", -- 正在显示 gitignore 文件
+        },
+        win = {
+          input = {
+            keys = {
+              ["<C-j>"] = { "list_down", mode = { "i", "n" } },
+              ["<C-k>"] = { "list_up", mode = { "i", "n" } },
+              ["<C-q>"] = { "qflist", mode = { "i", "n" } },
+              ["<Esc>"] = { "close", mode = { "i", "n" } },
+            },
+          },
+        },
+        sources = {
+          explorer = {
+            hidden = true, -- 显示隐藏文件
+            auto_close = true, -- 选择后自动关闭
+            -- 居中浮窗布局（默认为左侧边栏）
+            layout = {
+              layout = {
+                box = "vertical",
+                width = 100,
+                height = 50,
+                border = "rounded",
+                title = "{title} {live} {flags}",
+                title_pos = "center",
+                backdrop = false,
+                { win = "input", height = 1, border = "bottom" },
+                { win = "list", border = "none" },
+              },
+            },
+          },
+        },
+      },
+      -- lazygit 面板边框色：默认取 MatchParen，但 ayu 的 MatchParen 无前景色，
+      -- 会回退到 lazygit 自带的亮色，这里显式指到主题蓝
+      lazygit = {
+        theme = {
+          activeBorderColor = { fg = "DiagnosticInfo", bold = true },
+          searchingActiveBorderColor = { fg = "DiagnosticInfo", bold = true },
+        },
+      },
+      -- 窗口样式覆盖（snacks 浮窗默认无边框）
+      styles = {
+        lazygit = { border = "rounded" },
+      },
+    })
+
+    -- LazyGit 关闭后刷新 Git 状态
+    vim.api.nvim_create_autocmd("TermClose", {
+      pattern = "*lazygit*",
+      callback = function()
+        vim.defer_fn(function()
+          if pcall(require, "gitsigns") then
+            require("gitsigns").refresh()
+          end
+          vim.cmd("checktime")
+        end, 100)
+      end,
+      desc = "LazyGit 关闭后刷新 Git 状态",
+    })
+  end,
+}

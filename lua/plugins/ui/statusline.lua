@@ -6,8 +6,17 @@ return {
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
     local custom_theme = require("lualine.themes.ayu")
-    -- 使用统一的颜色管理
-    custom_theme.normal.c.bg = colors.lualine.bg
+    -- 覆盖所有模式：b/c 段使用柔和背景，a 段保留主题模式色块
+    for _, mode in pairs(custom_theme) do
+      if type(mode) == "table" then
+        if mode.b then
+          mode.b.bg = colors.lualine.section_bg
+        end
+        if mode.c then
+          mode.c.bg = colors.lualine.bg
+        end
+      end
+    end
 
     require("lualine").setup({
       options = {
