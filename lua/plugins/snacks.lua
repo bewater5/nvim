@@ -44,6 +44,7 @@ return {
         sources = {
           explorer = {
             hidden = true, -- 显示隐藏文件
+            auto_close = true, -- 选择后自动关闭
             -- 居中浮窗布局（默认为左侧边栏）
             layout = {
               layout = {
