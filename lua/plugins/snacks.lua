@@ -49,8 +49,8 @@ return {
             layout = {
               layout = {
                 box = "vertical",
-                width = 100,
-                height = 50,
+                width = 80,
+                height = 40,
                 border = "rounded",
                 title = "{title} {live} {flags}",
                 title_pos = "center",

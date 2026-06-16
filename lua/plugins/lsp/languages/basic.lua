@@ -137,10 +137,6 @@ function M.setup_autocmds()
       vim.bo.shiftwidth = 2
       vim.bo.expandtab = true
 
-      -- 启用拼写检查
-      vim.wo.spell = true
-      vim.bo.spelllang = "en_us"
-
       -- 设置文本宽度
       vim.bo.textwidth = 80
 
