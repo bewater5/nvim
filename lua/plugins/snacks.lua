@@ -21,6 +21,8 @@ return {
       input = { enabled = true },
       -- 通知渲染
       notifier = { enabled = true },
+      -- 图片预览：打开 png/jpg/gif/webp 等文件时
+      image = { enabled = true },
       -- 文件浏览器（q 关闭）
       explorer = { enabled = true },
       -- 模糊查找；vim.ui.select 也由 picker 渲染
