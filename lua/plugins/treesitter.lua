@@ -2,10 +2,11 @@ return {
   -- 安装和配置 Treesitter
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     dependencies = {
-      "nvim-treesitter/nvim-treesitter-textobjects",
+      { "nvim-treesitter/nvim-treesitter-textobjects", branch = "master" },
     },
     config = function()
       local treesitter = require("nvim-treesitter.configs")
