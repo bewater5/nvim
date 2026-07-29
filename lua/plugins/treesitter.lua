@@ -27,6 +27,8 @@ return {
           "go",
           "html",
           "css",
+          "scss",
+          "vue",
           "json",
           "yaml",
           "markdown",
