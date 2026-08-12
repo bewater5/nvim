@@ -259,10 +259,15 @@ local function setup_lsp_keymaps(bufnr)
 
   -- LSP导航 - 确保覆盖任何全局映射
   vim.keymap.set("n", "gd", function()
-    -- 检查是否有 LSP 客户端附加
-    local clients = vim.lsp.get_clients({ bufnr = bufnr })
+    -- 只调用真正支持跳转定义的客户端；诊断型 LSP（如 eslint）不支持该方法。
+    local clients = vim.lsp.get_clients({
+      bufnr = bufnr,
+      method = "textDocument/definition",
+    })
     if #clients > 0 then
       vim.lsp.buf.definition()
+    else
+      vim.notify("当前文件没有支持跳转定义的 LSP", vim.log.levels.WARN)
     end
   end, vim.tbl_extend("force", opts, { desc = "跳转到定义" }))
   vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "查找引用" }))

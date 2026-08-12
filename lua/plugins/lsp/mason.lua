@@ -33,6 +33,9 @@ function M.setup()
       -- Go
       "gopls",
 
+      -- Protobuf
+      "protols",
+
       -- 基础语言
       "jsonls",   -- JSON
       "html",     -- HTML
