@@ -6,15 +6,16 @@ A modern Neovim configuration built with Lua, featuring LSP support, autocomplet
 
 ## ✨ Features
 
-- **LSP integration**: full Language Server Protocol support with diagnostics and code actions
+- **LSP integration**: full Language Server Protocol support with diagnostics, code actions, and symbol reference highlighting
 - **Autocompletion**: powered by blink.cmp (Rust fuzzy matching) with LuaSnip snippets
 - **All-in-one toolkit**: snacks.nvim provides the fuzzy finder, file explorer, terminal, notifications, and more
-- **Fast navigation**: flash.nvim label-based jumps and Treesitter range selection
+- **Fast navigation**: flash.nvim label-based jumps through `s`, while native character motions remain untouched
+- **Testing**: neotest runners for Go, Python, and Vitest with nearest, file, and project scopes
 - **Git integration**: Gitsigns, Fugitive, and LazyGit
 - **Code formatting**: format on demand via Conform (no format-on-save)
 - **Syntax highlighting**: enhanced by Treesitter
 - **Transparent UI**: editor, floats, and bars let your terminal background shine through
-- **Session management**: session persistence via Persistence
+- **Session management**: per-directory Persistence sessions with jump history isolated between Neovim processes
 - **GitHub Copilot**: AI-powered code suggestions
 
 ## ⚡️ Requirements
@@ -81,6 +82,7 @@ The plugin manager (lazy.nvim) will install all plugins automatically on first l
 │       ├── formatting.lua     # Code formatting
 │       ├── snippets.lua       # Snippet engine
 │       ├── copilot.lua        # GitHub Copilot
+│       ├── neotest.lua        # Test runner configuration
 │       └── utils.lua          # Editing enhancements (autopairs, surround, ...)
 ├── snippets/                  # Custom snippets
 └── README.md
@@ -94,6 +96,7 @@ The plugin manager (lazy.nvim) will install all plugins automatically on first l
 | [snacks.nvim](https://github.com/folke/snacks.nvim) | Fuzzy finder, file explorer, terminal, LazyGit, notifications, and more |
 | [blink.cmp](https://github.com/saghen/blink.cmp) | Completion engine |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP configuration |
+| [neotest](https://github.com/nvim-neotest/neotest) | Test runner for Go, Python, and Vitest |
 | [flash.nvim](https://github.com/folke/flash.nvim) | Fast navigation |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting |
 | [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git decorations |
@@ -174,6 +177,10 @@ Inside a picker: `<C-j>` / `<C-k>` to move, `<C-q>` to send to quickfix, `<Esc>`
 | `<leader>de` / `<leader>dw` | Normal | Buffer / workspace diagnostics list |
 | `<leader>uh` | Normal | Toggle inlay hints |
 
+When the cursor rests on a symbol, its LSP references are underlined. Moving
+within the same occurrence keeps the highlight; leaving it clears the
+highlight.
+
 ### Formatting
 
 | Key | Mode | Description |
@@ -191,6 +198,18 @@ Inside a picker: `<C-j>` / `<C-k>` to move, `<C-q>` to send to quickfix, `<Esc>`
 | `gt` / `gT` | Normal | Next / previous buffer |
 | `<leader>tn` / `<leader>tc` | Normal | New / close tab |
 | `t]` / `t[` | Normal | Next / previous tab |
+
+### Tests (Neotest)
+
+| Key | Mode | Description |
+|-----|------|-------------|
+| `<leader>tr` | Normal | Run the test under the cursor |
+| `<leader>tR` | Normal | Run tests in the current file |
+| `<leader>ta` | Normal | Run all tests in the current project |
+| `<leader>ts` | Normal | Toggle the test summary |
+| `<leader>te` | Normal | Open output for the nearest test |
+| `<leader>tp` | Normal | Toggle the test output panel |
+| `<leader>tx` | Normal | Stop the running test |
 
 ### Git
 
@@ -211,18 +230,18 @@ Inside a picker: `<C-j>` / `<C-k>` to move, `<C-q>` to send to quickfix, `<Esc>`
 | Key | Mode | Description |
 |-----|------|-------------|
 | `<C-\>` | Normal/Terminal | Toggle floating terminal |
-| `<leader>tt` | Normal | Floating terminal |
-| `<leader>th` / `<leader>tv` | Normal | Horizontal / vertical terminal |
 
 ### Motions and Editing (flash / surround / Comment)
 
 | Key | Mode | Description |
 |-----|------|-------------|
-| `s` | Normal/Visual | Flash jump (type chars, then hit the label) |
-| `S` | Normal | Flash Treesitter selection |
+| `s` | Normal/Visual/Operator | Flash jump (type chars, then hit the label) |
 | `gcc` / `gc{motion}` | Normal | Toggle comment |
 | `ys{motion}{char}` | Normal | Add surrounding |
 | `ds{char}` / `cs{old}{new}` | Normal | Delete / change surrounding |
+
+Flash character mode is disabled, so `f`, `F`, `t`, `T`, `;`, and `,` retain
+their native Vim behavior.
 
 ### Sessions and Misc
 
@@ -232,6 +251,9 @@ Inside a picker: `<C-j>` / `<C-k>` to move, `<C-q>` to send to quickfix, `<Esc>`
 | `<leader>qd` | Normal | Don't save current session |
 | `<leader>se` | Normal | Edit snippets |
 | `<M-]>` / `<M-[>` | Insert | Next / previous Copilot suggestion |
+
+The jumplist is cleared once at startup. `<C-o>` and `<C-i>` therefore navigate
+only locations recorded by the current Neovim process.
 
 ## 🛠️ Customization
 

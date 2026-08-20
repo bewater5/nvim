@@ -66,6 +66,64 @@ local M = {
   { "n", "t[", ":tabp<CR>", { desc = "上一个标签页", noremap = true, silent = true } },
   { "n", "t]", ":tabn<CR>", { desc = "下一个标签页", noremap = true, silent = true } },
 
+  -- ========== 测试 (Neotest) ==========
+  {
+    "n",
+    "<leader>tr",
+    function()
+      require("neotest").run.run()
+    end,
+    { desc = "运行光标处测试", noremap = true, silent = true },
+  },
+  {
+    "n",
+    "<leader>tR",
+    function()
+      require("neotest").run.run(vim.fn.expand("%"))
+    end,
+    { desc = "运行当前文件测试", noremap = true, silent = true },
+  },
+  {
+    "n",
+    "<leader>ta",
+    function()
+      require("neotest").run.run(vim.fn.getcwd())
+    end,
+    { desc = "运行项目全部测试", noremap = true, silent = true },
+  },
+  {
+    "n",
+    "<leader>ts",
+    function()
+      require("neotest").summary.toggle()
+    end,
+    { desc = "切换测试摘要", noremap = true, silent = true },
+  },
+  {
+    "n",
+    "<leader>te",
+    function()
+      require("neotest").output.open({ enter = true })
+    end,
+    { desc = "查看测试输出", noremap = true, silent = true },
+  },
+  {
+    "n",
+    "<leader>tp",
+    function()
+      require("neotest").output_panel.toggle()
+    end,
+    { desc = "切换测试输出面板", noremap = true, silent = true },
+  },
+  {
+    "n",
+    "<leader>tx",
+    function()
+      require("neotest").run.stop()
+    end,
+    { desc = "停止测试", noremap = true, silent = true },
+  },
+
   -- ========== 文件浏览器 (Snacks.explorer) ==========
   { "n", "<leader>o", function()
     require("snacks").explorer()
