@@ -5,6 +5,7 @@ function M.setup()
   -- 设置Mason
   require("mason").setup({
     ui = {
+      border = "rounded",
       icons = {
         package_installed = "✓",
         package_pending = "➜",
@@ -50,6 +51,7 @@ function M.setup()
   -- 可以通过以下方式安装：
   -- :MasonInstall prettier stylua gofumpt goimports shfmt
   -- 或者使用系统包管理器安装
+  -- Rust 工具跟随 Rust 工具链：rustup component add rust-analyzer rustfmt clippy
 end
 
 return M

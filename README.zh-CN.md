@@ -27,6 +27,7 @@
 - **ripgrep**（用于 Snacks picker 实时搜索）
 - **fd**（可选，用于更快的文件查找）
 - **lazygit**（可选，用于 `<C-g>` Git 终端界面）
+- **Rust 工具链组件**（用于 Rust 开发）：`rustup component add rust-analyzer rustfmt clippy`
 
 ## 📦 安装
 

@@ -25,6 +25,9 @@ require("lazy").setup({ { import = "plugins" } }, {
   install = {
     colorscheme = { "ayu" },
   },
+  ui = {
+    border = "rounded",
+  },
   checker = {
     enabled = true,
     notify = false,

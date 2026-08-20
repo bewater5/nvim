@@ -30,6 +30,22 @@ return {
           opts = { skip = true },
         },
       },
+      -- 右下角的 LSP 加载进度使用 mini 视图
+      views = {
+        mini = {
+          border = {
+            style = "rounded",
+            padding = { 0, 1 },
+          },
+          win_options = {
+            winblend = 0,
+            winhighlight = {
+              Normal = "NoiceMini",
+              FloatBorder = "FloatBorder",
+            },
+          },
+        },
+      },
       presets = {
         bottom_search = true, -- use a classic bottom cmdline for search
         long_message_to_split = true, -- long messages will be sent to a split

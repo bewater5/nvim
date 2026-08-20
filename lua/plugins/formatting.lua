@@ -36,6 +36,9 @@ return {
       -- Go
       go = { "gofumpt", "goimports" },
 
+      -- Rust
+      rust = { "rustfmt" },
+
       -- Lua
       lua = { "stylua" },
 

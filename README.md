@@ -29,6 +29,7 @@ A modern Neovim configuration built with Lua, featuring LSP support, autocomplet
 - **ripgrep** (for Snacks picker live grep)
 - **fd** (optional, for faster file finding)
 - **lazygit** (optional, for the `<C-g>` Git TUI)
+- **Rust toolchain components** (for Rust development): `rustup component add rust-analyzer rustfmt clippy`
 
 ## 📦 Installation
 

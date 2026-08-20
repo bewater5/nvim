@@ -127,6 +127,7 @@ function M.setup()
     javascript = require("plugins.lsp.languages.javascript"),
     vue = require("plugins.lsp.languages.vue"),
     go = require("plugins.lsp.languages.go"),
+    rust = require("plugins.lsp.languages.rust"),
     protobuf = require("plugins.lsp.languages.protobuf"),
     lua = require("plugins.lsp.languages.lua"),
     python = require("plugins.lsp.languages.python"),
