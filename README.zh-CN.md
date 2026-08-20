@@ -6,15 +6,16 @@
 
 ## ✨ 特性
 
-- **LSP 集成**：完整的语言服务器协议支持，包含诊断和代码操作
+- **LSP 集成**：完整的语言服务器协议支持，包含诊断、代码操作和符号引用高亮
 - **自动补全**：基于 blink.cmp（Rust 模糊匹配），搭配 LuaSnip 代码片段
 - **多功能工具集**：snacks.nvim 提供模糊查找、文件浏览器、终端、通知等
-- **快速跳转**：flash.nvim 标签式跳转与 Treesitter 范围选择
+- **快速跳转**：通过 `s` 使用 flash.nvim 标签式跳转，同时保留原生字符移动
+- **测试**：通过 neotest 运行 Go、Python 和 Vitest 测试，支持光标处、当前文件和整个项目
 - **Git 集成**：Gitsigns、Fugitive 与 LazyGit
 - **代码格式化**：Conform 快捷键格式化（无保存自动格式化）
 - **语法高亮**：Treesitter 增强语法高亮
 - **透明 UI**：编辑区/浮窗/标签栏背景透明，透出终端背景
-- **会话管理**：Persistence 会话持久化
+- **会话管理**：Persistence 按目录保存会话，不同 Neovim 进程之间隔离跳转历史
 - **GitHub Copilot**：AI 驱动的代码建议
 
 ## ⚡️ 依赖要求
@@ -80,6 +81,7 @@ nvim
 │       ├── formatting.lua     # 代码格式化
 │       ├── snippets.lua       # 代码片段引擎
 │       ├── copilot.lua        # GitHub Copilot
+│       ├── neotest.lua        # 测试运行器配置
 │       └── utils.lua          # 编辑增强（autopairs、surround 等）
 ├── snippets/                  # 自定义代码片段
 └── README.md
@@ -93,6 +95,7 @@ nvim
 | [snacks.nvim](https://github.com/folke/snacks.nvim) | 模糊查找、文件浏览器、终端、LazyGit、通知等 |
 | [blink.cmp](https://github.com/saghen/blink.cmp) | 自动补全引擎 |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP 配置 |
+| [neotest](https://github.com/nvim-neotest/neotest) | Go、Python 和 Vitest 测试运行器 |
 | [flash.nvim](https://github.com/folke/flash.nvim) | 快速跳转 |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | 语法高亮 |
 | [gitsigns.nvim](https://github.com/lewis6991/gitsigns.nvim) | Git 装饰 |
@@ -173,6 +176,8 @@ picker 内：`<C-j>` / `<C-k>` 上下选择，`<C-q>` 发送到 quickfix，`<Esc
 | `<leader>de` / `<leader>dw` | 普通 | 当前文件 / 工作区诊断列表 |
 | `<leader>uh` | 普通 | 切换 Inlay Hints |
 
+光标停留在符号上时，同一符号的 LSP 引用会显示下划线；在同一处符号内移动会保留高亮，离开后清除。
+
 ### 格式化
 
 | 按键 | 模式 | 描述 |
@@ -190,6 +195,18 @@ picker 内：`<C-j>` / `<C-k>` 上下选择，`<C-q>` 发送到 quickfix，`<Esc
 | `gt` / `gT` | 普通 | 下一个 / 上一个缓冲区 |
 | `<leader>tn` / `<leader>tc` | 普通 | 新建 / 关闭标签页 |
 | `t]` / `t[` | 普通 | 下一个 / 上一个标签页 |
+
+### 测试（Neotest）
+
+| 按键 | 模式 | 描述 |
+|-----|------|-------------|
+| `<leader>tr` | 普通 | 运行光标处测试 |
+| `<leader>tR` | 普通 | 运行当前文件测试 |
+| `<leader>ta` | 普通 | 运行当前项目全部测试 |
+| `<leader>ts` | 普通 | 切换测试摘要 |
+| `<leader>te` | 普通 | 查看光标处测试的输出 |
+| `<leader>tp` | 普通 | 切换测试输出面板 |
+| `<leader>tx` | 普通 | 停止正在运行的测试 |
 
 ### Git
 
@@ -210,18 +227,17 @@ picker 内：`<C-j>` / `<C-k>` 上下选择，`<C-q>` 发送到 quickfix，`<Esc
 | 按键 | 模式 | 描述 |
 |-----|------|-------------|
 | `<C-\>` | 普通/终端 | 切换浮动终端 |
-| `<leader>tt` | 普通 | 浮动终端 |
-| `<leader>th` / `<leader>tv` | 普通 | 水平 / 垂直终端 |
 
 ### 跳转和编辑（flash / surround / Comment）
 
 | 按键 | 模式 | 描述 |
 |-----|------|-------------|
-| `s` | 普通/可视 | Flash 跳转（输入字符后按标签直达） |
-| `S` | 普通 | Flash Treesitter 范围选择 |
+| `s` | 普通/可视/操作符等待 | Flash 跳转（输入字符后按标签直达） |
 | `gcc` / `gc{motion}` | 普通 | 切换注释 |
 | `ys{motion}{char}` | 普通 | 添加包围符号 |
 | `ds{char}` / `cs{old}{new}` | 普通 | 删除 / 更改包围符号 |
+
+Flash 字符模式已关闭，`f`、`F`、`t`、`T`、`;` 和 `,` 均保留 Vim 原生行为。
 
 ### 会话和其他
 
@@ -231,6 +247,8 @@ picker 内：`<C-j>` / `<C-k>` 上下选择，`<C-q>` 发送到 quickfix，`<Esc
 | `<leader>qd` | 普通 | 不保存当前会话 |
 | `<leader>se` | 普通 | 编辑代码片段 |
 | `<M-]>` / `<M-[>` | 插入 | 下一个 / 上一个 Copilot 建议 |
+
+启动时会清空一次 jumplist，因此 `<C-o>` 和 `<C-i>` 只会访问当前 Neovim 进程记录的位置。
 
 ## 🛠️ 自定义
 
