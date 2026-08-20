@@ -63,7 +63,13 @@ return {
     "folke/flash.nvim",
     event = "VeryLazy",
     config = function()
-      require("flash").setup({})
+      require("flash").setup({
+        modes = {
+          char = {
+            enabled = false,
+          },
+        },
+      })
       -- 键盘映射已移至 lua/core/keymaps.lua 文件中统一管理
     end,
   },

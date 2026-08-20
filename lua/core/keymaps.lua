@@ -103,7 +103,6 @@ local M = {
   end, { desc = "查看通知历史", noremap = true, silent = true } },
 
   -- ========== Flash跳转导航 ==========
-  -- S 不绑 visual 模式：visual 的 S 是 nvim-surround 的添加包围符
   {
     { "n", "x", "o" },
     "s",
@@ -111,38 +110,6 @@ local M = {
       require("flash").jump()
     end,
     { desc = "Flash跳转", noremap = true },
-  },
-  {
-    { "n", "o" },
-    "S",
-    function()
-      require("flash").treesitter()
-    end,
-    { desc = "Flash Treesitter选择", noremap = true },
-  },
-  {
-    "o",
-    "r",
-    function()
-      require("flash").remote()
-    end,
-    { desc = "Flash远程操作", noremap = true },
-  },
-  {
-    { "o", "x" },
-    "R",
-    function()
-      require("flash").treesitter_search()
-    end,
-    { desc = "Flash Treesitter搜索", noremap = true },
-  },
-  {
-    "c",
-    "<C-s>",
-    function()
-      require("flash").toggle()
-    end,
-    { desc = "切换Flash搜索", noremap = true },
   },
 
   -- ========== 会话管理 (Persistence) ==========
