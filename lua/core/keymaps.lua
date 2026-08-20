@@ -268,7 +268,7 @@ local function setup_lsp_keymaps(bufnr)
     if #clients > 0 then
       vim.lsp.buf.definition()
     else
-      vim.notify("当前文件没有支持跳转定义的 LSP", vim.log.levels.WARN)
+      vim.notify("No LSP supporting go-to-definition is attached to the current file", vim.log.levels.WARN)
     end
   end, vim.tbl_extend("force", opts, { desc = "跳转到定义" }))
   vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "查找引用" }))

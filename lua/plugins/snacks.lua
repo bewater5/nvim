@@ -51,8 +51,11 @@ return {
             layout = {
               layout = {
                 box = "vertical",
-                width = 80,
-                height = 40,
+                -- 随视口缩放，同时保持原来的 80x40 作为最大尺寸
+                width = 0.8,
+                max_width = 80,
+                height = 0.8,
+                max_height = 40,
                 border = "rounded",
                 title = "{title} {live} {flags}",
                 title_pos = "center",

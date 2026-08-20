@@ -4,6 +4,8 @@ English | [简体中文](./README.zh-CN.md)
 
 A modern Neovim configuration built with Lua, featuring LSP support, autocompletion, fuzzy finding, and a transparent, polished UI. It aims to deliver a powerful IDE-like experience while keeping Neovim simple and fast.
 
+![Neovim configuration screenshot](./assets/screenshot.jpeg)
+
 ## ✨ Features
 
 - **LSP integration**: full Language Server Protocol support with diagnostics, code actions, and symbol reference highlighting

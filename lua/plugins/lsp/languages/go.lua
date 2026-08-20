@@ -90,7 +90,7 @@ function M.setup_keymaps(bufnr)
     if #clients > 0 then
       vim.lsp.buf.definition()
     else
-      vim.notify("gopls LSP 客户端未附加到当前缓冲区", vim.log.levels.WARN)
+      vim.notify("The gopls LSP client is not attached to the current buffer", vim.log.levels.WARN)
     end
   end, vim.tbl_extend("force", opts, { desc = "Go: 跳转到定义" }))
 
