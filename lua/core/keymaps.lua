@@ -172,30 +172,6 @@ local M = {
   },
 
   -- ========== 终端管理 (Snacks.terminal) ==========
-  {
-    "n",
-    "<leader>tt",
-    function()
-      require("snacks").terminal.toggle(nil, { win = { position = "float", border = "rounded" } })
-    end,
-    { desc = "浮动终端", noremap = true, silent = true },
-  },
-  {
-    "n",
-    "<leader>th",
-    function()
-      require("snacks").terminal.toggle(nil, { win = { position = "bottom", height = 20 } })
-    end,
-    { desc = "水平终端", noremap = true, silent = true },
-  },
-  {
-    "n",
-    "<leader>tv",
-    function()
-      require("snacks").terminal.toggle(nil, { win = { position = "right" } })
-    end,
-    { desc = "垂直终端", noremap = true, silent = true },
-  },
   -- t 模式同样绑定，终端内可直接按 <C-\> 关闭
   {
     { "n", "t" },
