@@ -118,6 +118,17 @@ return {
           fg = colors.diagnostic.hint_sign,
           bg = colors.bg_color,
         },
+        -- 光标停留时突出同一 LSP 符号的文本、读取与写入位置
+        LspReferenceText = {
+          underline = true,
+        },
+        LspReferenceRead = {
+          underline = true,
+        },
+        LspReferenceWrite = {
+          underline = true,
+          bold = true,
+        },
       },
     })
     vim.cmd("colorscheme ayu")
