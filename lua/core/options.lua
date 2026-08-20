@@ -60,6 +60,14 @@ opt.clipboard:append("unnamedplus")
 -- 不显示文件写入消息
 vim.opt.shortmess:append("W")
 
+-- 跳转历史仅属于当前 Neovim 进程，不继承 ShaDa 中的上次编辑位置。
+vim.api.nvim_create_autocmd("VimEnter", {
+  group = vim.api.nvim_create_augroup("ClearStartupJumps", { clear = true }),
+  callback = function()
+    vim.cmd.clearjumps()
+  end,
+})
+
 -- 禁止 o/O 自动添加注释前缀
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "*",
