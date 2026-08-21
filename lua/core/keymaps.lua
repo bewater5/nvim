@@ -215,7 +215,7 @@ local M = {
   end, { desc = "LazyGit", noremap = true, silent = true } },
 
   -- ========== Copilot ==========
-  -- 注意：<C-j>/<C-k> 已被 nvim-cmp 占用（补全/片段跳转），Copilot 循环建议改用 <M-]>/<M-[>
+  -- 插入模式的 <C-j>/<C-k> 用于 blink.cmp，Copilot 循环建议改用 <M-]>/<M-[>
   { "i", "<M-]>", "copilot#Next()", { expr = true, silent = true, desc = "下一个Copilot建议" } },
   { "i", "<M-[>", "copilot#Previous()", { expr = true, silent = true, desc = "上一个Copilot建议" } },
 
@@ -275,12 +275,6 @@ local function setup_lsp_keymaps(bufnr)
   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "跳转到声明" }))
   vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "跳转到实现" }))
   vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "显示悬停文档" }))
-  vim.keymap.set(
-    "n",
-    "<C-k>",
-    vim.lsp.buf.signature_help,
-    vim.tbl_extend("force", opts, { desc = "显示签名帮助" })
-  )
 
   -- 诊断
   vim.keymap.set(
@@ -321,7 +315,7 @@ local function setup_gitsigns_keymaps(bufnr)
   end
 
   -- 导航
-  map("n", "]c", function()
+  map("n", "<C-j>", function()
     if vim.wo.diff then
       return "]c"
     end
@@ -331,7 +325,7 @@ local function setup_gitsigns_keymaps(bufnr)
     return "<Ignore>"
   end, { expr = true, desc = "下一个 Git 变更" })
 
-  map("n", "[c", function()
+  map("n", "<C-k>", function()
     if vim.wo.diff then
       return "[c"
     end

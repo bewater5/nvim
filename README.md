@@ -172,7 +172,6 @@ Inside a picker: `<C-j>` / `<C-k>` to move, `<C-q>` to send to quickfix, `<Esc>`
 | `gd` / `gD` | Normal | Go to definition / declaration |
 | `gr` / `gi` | Normal | Find references / go to implementation |
 | `K` | Normal | Hover documentation |
-| `<C-k>` | Normal | Signature help |
 | `<leader>rn` | Normal | Rename symbol |
 | `<leader>ca` | Normal | Code actions |
 | `<leader>e` | Normal | Line diagnostics |
@@ -220,7 +219,7 @@ highlight.
 |-----|------|-------------|
 | `<C-g>` | Normal | LazyGit |
 | `<leader>gs` | Normal | Git status (Fugitive) |
-| `]c` / `[c` | Normal | Next / previous hunk |
+| `<C-j>` / `<C-k>` | Normal | Next / previous hunk |
 | `<leader>hs` / `<leader>hr` | Normal/Visual | Stage / reset hunk |
 | `<leader>hu` | Normal | Undo stage hunk |
 | `<leader>hp` | Normal | Preview hunk |
