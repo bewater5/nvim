@@ -260,20 +260,17 @@ local function setup_lsp_keymaps(bufnr)
 
   -- LSP导航 - 确保覆盖任何全局映射
   vim.keymap.set("n", "gd", function()
-    -- 只调用真正支持跳转定义的客户端；诊断型 LSP（如 eslint）不支持该方法。
-    local clients = vim.lsp.get_clients({
-      bufnr = bufnr,
-      method = "textDocument/definition",
-    })
-    if #clients > 0 then
-      vim.lsp.buf.definition()
-    else
-      vim.notify("No LSP supporting go-to-definition is attached to the current file", vim.log.levels.WARN)
-    end
+    require("snacks").picker.lsp_definitions()
   end, vim.tbl_extend("force", opts, { desc = "跳转到定义" }))
-  vim.keymap.set("n", "gr", vim.lsp.buf.references, vim.tbl_extend("force", opts, { desc = "查找引用" }))
-  vim.keymap.set("n", "gD", vim.lsp.buf.declaration, vim.tbl_extend("force", opts, { desc = "跳转到声明" }))
-  vim.keymap.set("n", "gi", vim.lsp.buf.implementation, vim.tbl_extend("force", opts, { desc = "跳转到实现" }))
+  vim.keymap.set("n", "gr", function()
+    require("snacks").picker.lsp_references()
+  end, vim.tbl_extend("force", opts, { desc = "查找引用", nowait = true }))
+  vim.keymap.set("n", "gD", function()
+    require("snacks").picker.lsp_declarations()
+  end, vim.tbl_extend("force", opts, { desc = "跳转到声明" }))
+  vim.keymap.set("n", "gi", function()
+    require("snacks").picker.lsp_implementations()
+  end, vim.tbl_extend("force", opts, { desc = "跳转到实现" }))
   vim.keymap.set("n", "K", vim.lsp.buf.hover, vim.tbl_extend("force", opts, { desc = "显示悬停文档" }))
 
   -- 诊断
