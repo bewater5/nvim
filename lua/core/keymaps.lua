@@ -26,6 +26,14 @@ local M = {
   -- 粘贴不覆盖寄存器
   { "v", "p", '"_dP', { desc = "粘贴不覆盖寄存器", noremap = true } },
 
+  -- 禁用 Neovim 原生右键菜单，保留左键和滚轮
+  { { "n", "i", "v", "o", "c", "t" }, "<RightMouse>", "<Nop>", { desc = "禁用鼠标右键", noremap = true, silent = true } },
+  { { "n", "i", "v", "o", "c", "t" }, "<2-RightMouse>", "<Nop>", { desc = "禁用鼠标右键双击", noremap = true, silent = true } },
+  { { "n", "i", "v", "o", "c", "t" }, "<3-RightMouse>", "<Nop>", { desc = "禁用鼠标右键三击", noremap = true, silent = true } },
+  { { "n", "i", "v", "o", "c", "t" }, "<4-RightMouse>", "<Nop>", { desc = "禁用鼠标右键四击", noremap = true, silent = true } },
+  { { "n", "i", "v", "o", "c", "t" }, "<RightDrag>", "<Nop>", { desc = "禁用鼠标右键拖动", noremap = true, silent = true } },
+  { { "n", "i", "v", "o", "c", "t" }, "<RightRelease>", "<Nop>", { desc = "禁用鼠标右键释放", noremap = true, silent = true } },
+
   -- 清除搜索高亮
   { "n", "<leader>nh", ":nohl<CR>", { desc = "清除搜索高亮", noremap = true, silent = true } },
 

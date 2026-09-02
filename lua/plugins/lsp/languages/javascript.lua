@@ -46,8 +46,11 @@ function M.setup(capabilities, on_attach)
       },
     },
     filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
-    -- 优先匹配 tsconfig.json，解决 monorepo 子包切换问题
-    root_markers = { "tsconfig.json", "package.json", "jsconfig.json" },
+    -- 每个子包独立启动 ts_ls，避免以 monorepo 根目录加载全部 TypeScript/Vue 项目。
+    root_dir = function(bufnr, on_dir)
+      local project_root = vim.fs.root(bufnr, { "tsconfig.json", "jsconfig.json", "package.json" })
+      on_dir(project_root or vim.fn.getcwd())
+    end,
     init_options = {
       plugins = {
         { name = "@vue/typescript-plugin", location = require("plugins.lsp.languages.vue").vue_language_server_path, languages = { "vue" } },
