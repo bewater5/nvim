@@ -1,11 +1,49 @@
 -- JavaScript/TypeScript LSP 配置
 local M = {}
 
+local bundled_tsserver_path = vim.fn.stdpath("data")
+    .. "/mason/packages/typescript-language-server/node_modules/typescript/lib/tsserver.js"
+
+local function read_package(package_path)
+  if vim.fn.filereadable(package_path) ~= 1 then return nil end
+
+  local ok, package = pcall(vim.json.decode, table.concat(vim.fn.readfile(package_path), "\n"))
+  return ok and package or nil
+end
+
+local function workspace_uses_vue(root_dir)
+  if not root_dir then return false end
+
+  local package = read_package(vim.fs.joinpath(root_dir, "package.json"))
+  if not package then return false end
+
+  return (package.dependencies and package.dependencies.vue ~= nil)
+    or (package.devDependencies and package.devDependencies.vue ~= nil)
+    or (package.peerDependencies and package.peerDependencies.vue ~= nil)
+end
+
+local function workspace_typescript_major(root_dir)
+  if not root_dir then return nil end
+
+  local package = read_package(vim.fs.joinpath(root_dir, "node_modules", "typescript", "package.json"))
+  if not package or type(package.version) ~= "string" then return nil end
+
+  return tonumber(package.version:match("^(%d+)"))
+end
+
 function M.setup(capabilities, on_attach)
   -- TypeScript Language Server
   vim.lsp.config("ts_ls", {
     capabilities = capabilities,
     on_attach = on_attach,
+    before_init = function(_, config)
+      -- Vue Language Tools 3 需要 TypeScript 5+；旧项目仅在编辑器内使用 Mason 自带版本。
+      local typescript_major = workspace_typescript_major(config.root_dir)
+      if workspace_uses_vue(config.root_dir) and typescript_major and typescript_major < 5 then
+        config.init_options.tsserver = config.init_options.tsserver or {}
+        config.init_options.tsserver.path = bundled_tsserver_path
+      end
+    end,
     settings = {
       typescript = {
         preferences = {
