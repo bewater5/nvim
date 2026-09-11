@@ -49,7 +49,7 @@ function M.setup()
 
   -- 注意：格式化工具需要手动安装
   -- 可以通过以下方式安装：
-  -- :MasonInstall prettier stylua gofumpt goimports shfmt
+  -- :MasonInstall prettier stylua gofumpt goimports shfmt clang-format
   -- 或者使用系统包管理器安装
   -- Rust 工具跟随 Rust 工具链：rustup component add rust-analyzer rustfmt clippy
 end

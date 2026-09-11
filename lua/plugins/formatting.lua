@@ -39,6 +39,9 @@ return {
       -- Rust
       rust = { "rustfmt" },
 
+      -- Protobuf
+      proto = { "clang-format" },
+
       -- Lua
       lua = { "stylua" },
 
